@@ -1,0 +1,35 @@
+//SPDX-License-Identifier: MIT
+//As a practice for the course: https://app.patika.dev/courses/smart-contract-development-with-solidity/hands-taskbuild-deploy-to-do-list
+pragma solidity ^0.8.7;
+
+contract TodoList{
+    struct Todo{
+        string description;
+        bool completed;
+    }
+
+    Todo[] public todos;
+
+    function create(string calldata _text) external{
+        todos.push(Todo({
+            description: _text,
+            completed: false
+        }));
+    }
+
+    function updateText(uint index, string calldata _text) external{
+        todos[index].description = _text;
+
+        //Todo storage todo = todos[index];
+        //todo.description = _text;
+    }
+
+    function get(uint index) external view returns (string memory, bool){
+        Todo memory todo = todos[index];
+        return(todo.description, todo.completed);
+    }
+
+    function toggleCompleted(uint index) external{
+        todos[index].completed = !todos[index].completed;
+    }
+}
